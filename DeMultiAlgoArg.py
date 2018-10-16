@@ -1,7 +1,7 @@
 
 # coding: utf-8
 
-# In[27]:
+# In[29]:
 
 
 #!/usr/bin/env python3
@@ -17,6 +17,7 @@ def get_arguments():
         parser.add_argument("-r2", "--read2", help="Reverse read file", type = str, required = True)
         parser.add_argument("-i2", "--index2", help="Reverse index file", type = str, required = True)
         parser.add_argument("-t", "--threshold", help="Specify the k-mer size you intend to work with", type = float, required = False, default = 25,        choices = range(0, 40))
+        parser.add_argument("-b", "--barcodes", help="Barcode mapping file", type = str, required = False, default = "indexes.txt")
         return parser.parse_args()
 
 def reverseComplement(dna):
@@ -54,23 +55,25 @@ def writeOutFq(fRead, rRead, indexSeq, fileDict):
     reverse.write(rRead)
      
 
+# barcodes = "indexes.txt"
+barcodes = args.barcodes
 #This dictionary holds barcode sequence as key and respective ID as value
-indexLib = indexDict("indexes.txt")   
+indexLib = indexDict(barcodes)   
 #Add N to dictionary for all bad reads 
 indexLib["N"] = "unMatched"
-args = get_arguments()
-bioRead1 = args.read1
-indexRead1 = args.index1
-bioRead2 = args.read2
-indexRead2 = args.index2
-qsThreshold = args.threshold
+# args = get_arguments()
+# bioRead1 = args.read1
+# indexRead1 = args.index1
+# bioRead2 = args.read2
+# indexRead2 = args.index2
+# qsThreshold = args.threshold
 
 #Test Files
-# bioRead1 = 'test.fastq.gz'
-# indexRead1 = 'testIndex.fastq.gz'
-# bioRead2 = 'testR2.fastq.gz'
-# indexRead2 = 'testIndexR2.fastq.gz'
-# qsThreshold = 25
+bioRead1 = 'test.fastq.gz'
+indexRead1 = 'testIndex.fastq.gz'
+bioRead2 = 'testR2.fastq.gz'
+indexRead2 = 'testIndexR2.fastq.gz'
+qsThreshold = 25
 
 
 #This dictionary holds ID + forward/reverse read as key, and respective opened file as values.
@@ -172,9 +175,9 @@ for ID, file in files.items():
     
 print("Write statisitcs")
 print("Records Read: ", recordsRead)
-print("Matched reads: ", matchedInd)
+print("Bad reads(Ns): ", badRead)
 print("Below threshold: ", belowThres)
 print("unmatched indices: ", unmatchedInd)
-print("bad reads(Ns): ", badRead)
-print("Matched barcodes above threshold not found in indexes file: ", notFound)
+print("Not found in indexes file: ", notFound)
+print("Matched reads: ", matchedInd)
 

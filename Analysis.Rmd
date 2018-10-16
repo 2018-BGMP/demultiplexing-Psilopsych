@@ -1,7 +1,7 @@
 ---
 title: "deMultiplexing"
 author: "Nate Olowo"
-date: "October 14, 2018"
+date: "October 16, 2018"
 output: pdf_document
 ---
 ## Demultiplexing Assignment
@@ -66,25 +66,68 @@ All bad reads are written to unmatched*.fastq file pairs.
 
 
 ### Output of 1294 read files. 
+
 ``` {r, include = FALSE}
 library(tidyverse)
 ```
 
-__Relative abudancies__
-```{r, echo=FALSE}
+__Relative abundancies__
+
+```{r, echo=FALSE, message=FALSE}
 samples <- read_csv("samplePerc.csv") %>%
   filter(Reads < 2905973880) %>%
+  filter(!grepl("Forward",Sample)) %>%
   mutate(Freq = Reads / sum(Reads))
 
 
-ggplot(samples, aes(x=Sample, y=Freq, fill=Sample)) +
+ggplot(samples, aes(x=reorder(Sample, -Freq), y=Freq, fill=Sample)) +
   geom_bar(stat="identity")+theme_minimal() +
   ylab("Relative Frequency") +
-  theme(axis.text.x=element_blank(),
-  text = element_text(size=8)) +
-  scale_y_continuous(labels = scales::percent)
+  theme(axis.text.x = element_text(angle = 90, hjust = 1),
+  text = element_text(size=8),
+  legend.position="none") +
+  scale_y_continuous(labels = scales::percent) +
+  xlab("Sample ID")
 
 ```
-__Figure 1:__ Relative abudance of reads mapping to each sample. 
+__Figure 1:__ Relative abundance of forward and reverse reads of each sample deMultiplexed. Forward and reverse files contain same number of reads. 
 
 __Output Statistics:__
+
+Write statisitcs
+
+Records Read:  363,246,735
+
+Matched reads:  304,980,270
+
+Below threshold:  44,557,157
+
+unmatched indices:  9,499,159
+
+bad reads(Ns):  4,205,183
+
+Matched barcodes above threshold not found in indexes file:  4,966
+
+__Estimated amount of index-hopping__
+
+(44557157 + 9499159 + 4205183 + 4966) / 363246735 * 100 = 16% indexes hoppped
+
+84% matched indexes
+
+__Output Snippets__
+``` {r engine = 'bash', eval = FALSE}
+
+head -n 4 A10Forward.fastq
+@K00337:83:HJKJNBBXX:8:1101:1763:1701 1:N:0:1:TCGAGAGT
+TGTGTAATACATTTCATTTCTTTAATGAAAAGAAAAAAAGTATCTCTAGGGACCAGAGAGATGGCTTAGCAGCTAAGAGCTCTTCTTGAGGACCCTGGTTT
++
+AAFAFJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJFJJJJJJJJJAJJ
+
+head -n 4 A10Reverse.fastq
+@K00337:83:HJKJNBBXX:8:1101:1763:1701 4:N:0:1:TCGAGAGT
+CCAAAATTCAGTTATAGAATCTTTCAGAAATCTTTCACTGTGTATAGGTGTTTTGCGTGTAAGCATGTCTTACACCCGTGTATGAGCATTGCCCTTAGAAA
++
+AAFFFJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJFFJFFJJJJJJJ
+```
+
+``` {r engine = 'bash', eval = FALSE}
