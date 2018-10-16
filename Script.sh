@@ -10,6 +10,6 @@ module purge
 module load easybuild intel/2017a Python/3.6.1; which python
 
 /usr/bin/time python3 DeMultiAlgoArg.py -r1 "../../../../../shared/2017_sequencing/1294_S1_L008_R1_001.fastq.gz" -i1 "../../../../../shared/2017_sequencing/1294_S1_L008_R2_001.fastq.gz"\
- -r2 "../../../../../shared/2017_sequencing/1294_S1_L008_R4_001.fastq.gz" -i2 "../../../../../shared/2017_sequencing/1294_S1_L008_R3_001.fastq.gz" -t 30 > out.txt
+ -r2 "../../../../../shared/2017_sequencing/1294_S1_L008_R4_001.fastq.gz" -i2 "../../../../../shared/2017_sequencing/1294_S1_L008_R3_001.fastq.gz" -t 30 -b "indexes.txt" > out.txt
  
  find . -name '*.fastq' | xargs wc -l

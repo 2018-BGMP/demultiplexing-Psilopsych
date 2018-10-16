@@ -36,4 +36,8 @@ __unmatched indices:__ Indexes don't match. Passes threshold and N tests stated 
 
 __Not found in indexes file:__ Index of forward read not found in indexes.txt input file. Passes all tests above. 
 
+<<<<<<< HEAD
 __Matched Reads:__ Passes all above test. Read written to respective sample with forward and reverse written seperately. Forward index place inline with read headers for forward and reverse reads.
+=======
+__Matched Reads:__ Passes all above test. Read written to respective sample with forward and reverse written seperately. Forward index place inline with read headers for forward and reverse reads.
+>>>>>>> 71e63284f37d5f38e7a2ff760fe7fb5a081e3e48

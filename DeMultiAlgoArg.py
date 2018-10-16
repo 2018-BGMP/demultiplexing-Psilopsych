@@ -1,9 +1,3 @@
-
-# coding: utf-8
-
-# In[29]:
-
-
 #!/usr/bin/env python3
 
 from pathlib import Path
@@ -55,25 +49,25 @@ def writeOutFq(fRead, rRead, indexSeq, fileDict):
     reverse.write(rRead)
      
 
+args = get_arguments()
 # barcodes = "indexes.txt"
 barcodes = args.barcodes
 #This dictionary holds barcode sequence as key and respective ID as value
 indexLib = indexDict(barcodes)   
 #Add N to dictionary for all bad reads 
 indexLib["N"] = "unMatched"
-# args = get_arguments()
-# bioRead1 = args.read1
-# indexRead1 = args.index1
-# bioRead2 = args.read2
-# indexRead2 = args.index2
-# qsThreshold = args.threshold
+bioRead1 = args.read1
+indexRead1 = args.index1
+bioRead2 = args.read2
+indexRead2 = args.index2
+qsThreshold = args.threshold
 
 #Test Files
-bioRead1 = 'test.fastq.gz'
-indexRead1 = 'testIndex.fastq.gz'
-bioRead2 = 'testR2.fastq.gz'
-indexRead2 = 'testIndexR2.fastq.gz'
-qsThreshold = 25
+# bioRead1 = 'test.fastq.gz'
+# indexRead1 = 'testIndex.fastq.gz'
+# bioRead2 = 'testR2.fastq.gz'
+# indexRead2 = 'testIndexR2.fastq.gz'
+# qsThreshold = 25
 
 
 #This dictionary holds ID + forward/reverse read as key, and respective opened file as values.
