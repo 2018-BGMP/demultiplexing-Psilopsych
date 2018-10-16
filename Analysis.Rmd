@@ -110,7 +110,7 @@ Matched barcodes above threshold not found in indexes file:  4,966
 
 __Estimated amount of index-hopping__
 
-(44557157 + 9499159 + 4205183 + 4966) / 363246735 * 100 = 16% indexes hoppped
+(9499159) / 363246735 * 100 = 2.6% indexes hoppped
 
 84% matched indexes
 
@@ -131,3 +131,5 @@ AAFFFJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJ
 ```
 
 ``` {r engine = 'bash', eval = FALSE}
+
+```
